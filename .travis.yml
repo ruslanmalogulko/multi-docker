@@ -1,0 +1,23 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t ruslanmalogulko/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    docker run ruslanmalogulko/react-test -e CI=true npm test -- --coverage
+
+after_success:
+    - dicker build -t ruslanmalogulko/multi-client ./client
+    - dicker build -t ruslanmalogulko/multi-nginx ./nginx
+    - dicker build -t ruslanmalogulko/multi-server ./server
+    - dicker build -t ruslanmalogulko/multi-worker ./worker
+
+    # Log into Docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # push images to docker hub
+    - docker push ruslanmalogulko/client
+    - docker push ruslanmalogulko/nginx
+    - docker push ruslanmalogulko/server
+    - docker push ruslanmalogulko/worker
