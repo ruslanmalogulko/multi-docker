@@ -9,10 +9,10 @@ script:
     docker run ruslanmalogulko/react-test npm test -e CI=true npm test -- --coverage
 
 after_success:
-    - dicker build -t ruslanmalogulko/multi-client ./client
-    - dicker build -t ruslanmalogulko/multi-nginx ./nginx
-    - dicker build -t ruslanmalogulko/multi-server ./server
-    - dicker build -t ruslanmalogulko/multi-worker ./worker
+    - docker build -t ruslanmalogulko/multi-client ./client
+    - docker build -t ruslanmalogulko/multi-nginx ./nginx
+    - docker build -t ruslanmalogulko/multi-server ./server
+    - docker build -t ruslanmalogulko/multi-worker ./worker
 
     # Log into Docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
