@@ -9,7 +9,7 @@ script:
     CI=true && docker run ruslanmalogulko/react-test npm test -e npm test -- --coverage
 
 after_success:
-    - docker build -t ruslanmalogulko/multi-client ./client
+    # - docker build -t ruslanmalogulko/multi-client ./client
     - docker build -t ruslanmalogulko/multi-nginx ./nginx
     - docker build -t ruslanmalogulko/multi-server ./server
     - docker build -t ruslanmalogulko/multi-worker ./worker
@@ -17,7 +17,7 @@ after_success:
     # Log into Docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # push images to docker hub
-    - docker push ruslanmalogulko/client
+    # - docker push ruslanmalogulko/client
     - docker push ruslanmalogulko/nginx
     - docker push ruslanmalogulko/server
     - docker push ruslanmalogulko/worker
