@@ -8,12 +8,6 @@ before_install:
     - docker build -t ruslanmalogulko/multi-nginx ./nginx
     - docker build -t ruslanmalogulko/multi-server ./server
     - docker build -t ruslanmalogulko/multi-worker ./worker
-
-
-script:
-    docker run ruslanmalogulko/react-test npm test -e npm test -- --coverage
-
-after_success:
     # Log into Docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     # push images to docker hub
@@ -21,3 +15,7 @@ after_success:
     - docker push ruslanmalogulko/multi-nginx
     - docker push ruslanmalogulko/multi-server
     - docker push ruslanmalogulko/multi-worker
+
+
+script:
+    docker run ruslanmalogulko/react-test npm test -e npm test -- --coverage
